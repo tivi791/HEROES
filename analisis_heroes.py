@@ -2591,8 +2591,6 @@ with col1:
     st.metric("Defensa Física", hero1_data["defensa_fisica"])
     st.metric("Velocidad", hero1_data["velocidad_movimiento"])
     st.metric("Índice de Combate", round(hero1_data["indice_combate"], 2))
-    st.metric("Bajas", hero1_data["bajas"])
-    st.metric("Muertes", hero1_data["muertes"])
 with col2:
     st.subheader(hero2)
     st.metric("Salud Máx", hero2_data["salud_max"])
@@ -2600,8 +2598,6 @@ with col2:
     st.metric("Defensa Física", hero2_data["defensa_fisica"])
     st.metric("Velocidad", hero2_data["velocidad_movimiento"])
     st.metric("Índice de Combate", round(hero2_data["indice_combate"], 2))
-    st.metric("Bajas", hero2_data["bajas"])
-    st.metric("Muertes", hero2_data["muertes"])
 
 # ----------------- COMPARACIÓN -----------------
 def comparar_heroes(h1, h2):
@@ -2619,8 +2615,6 @@ def comparar_heroes(h1, h2):
         evaluar("defensa_fisica", "defensa física"),
         evaluar("velocidad_movimiento", "velocidad de movimiento"),
         evaluar("indice_combate", "índice de combate"),
-        evaluar("bajas", "bajas"),
-        evaluar("muertes", "muertes"),
     ]
 
 st.markdown("## ⚔️ Comparación directa")
@@ -2630,7 +2624,7 @@ for item in comparar_heroes(hero1_data, hero2_data):
 # ----------------- GRÁFICO DE COMPARACIÓN -----------------
 st.markdown("## 📈 Comparación gráfica")
 
-metrics = ['salud_max', 'ataque_fisico', 'defensa_fisica', 'velocidad_movimiento', 'bajas', 'muertes']
+metrics = ['salud_max', 'ataque_fisico', 'defensa_fisica', 'velocidad_movimiento']
 df_plot = df[df["nombre"].isin([hero1, hero2])].set_index("nombre")[metrics]
 
 st.bar_chart(df_plot.T)
@@ -2681,13 +2675,10 @@ if hero1_data['salud_max'] < 3300:
     recomendaciones.append("🔸 Tiene poca salud. Evita emparejarlo con héroes frágiles.")
 if hero1_data['velocidad_movimiento'] >= 380:
     recomendaciones.append("🚀 Alta movilidad. Útil para flanqueos o emboscadas.")
-if hero1_data['bajas'] > hero1_data['muertes']:
-    recomendaciones.append("🔸 Este héroe es eficiente en peleas. Tiene un buen ratio de bajas a muertes.")
-else:
-    recomendaciones.append("⚠️ Este héroe tiene un alto número de muertes en comparación con sus bajas.")
 
 if recomendaciones:
     for rec in recomendaciones:
         st.write(rec)
 else:
     st.info("Este héroe tiene estadísticas equilibradas. No se detectaron recomendaciones particulares.")
+
